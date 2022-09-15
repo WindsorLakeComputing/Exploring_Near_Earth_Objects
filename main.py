@@ -384,6 +384,9 @@ def main():
     # Extract data from the data files into structured Python objects.
     database = NEODatabase(load_neos(args.neofile), load_approaches(args.cadfile))
 
+    print(f"Searching for the designation of Ganymed")
+    print(database.get_neo_by_name("Ganymed"))
+
     # Run the chosen subcommand.
     if args.cmd == 'inspect':
         inspect(database, pdes=args.pdes, name=args.name, verbose=args.verbose)

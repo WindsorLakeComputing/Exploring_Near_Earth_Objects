@@ -42,6 +42,24 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
+        print(f"len of self._neos is {len(self._neos)}")
+        print(f"len of self._approaches is {len(self._approaches)}")
+
+        for n in self._neos:
+            #print(f"THe n.designation is {n.designation}")
+            for a in self._approaches:
+                #print(f"THe a.designation is {a._designation}")
+                if(a.neo):
+                    #print("SUUUUP???")
+                    #print(a.neo)
+                    break
+                if (a._designation == n.designation):
+                    n.approaches.append(a)
+                    a.neo = n
+                    #print(f"a == {a}")
+                    #print(f"n == {n}")
+
+
         # TODO: What additional auxiliary data structures will be useful?
 
         # TODO: Link together the NEOs and their close approaches.
@@ -59,8 +77,12 @@ class NEODatabase:
         :param designation: The primary designation of the NEO to search for.
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
-        # TODO: Fetch an NEO by its primary designation.
-        return None
+        match = None
+        for n in self._neos:
+            if n.designation == designation:
+                match = n
+
+        return match
 
     def get_neo_by_name(self, name):
         """Find and return an NEO by its name.
@@ -76,8 +98,13 @@ class NEODatabase:
         :param name: The name, as a string, of the NEO to search for.
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
-        # TODO: Fetch an NEO by its name.
-        return None
+        match = None
+        for n in self._neos:
+            print(f"n.name == {n.name}")
+            if n.name == name:
+                match = n
+
+        return match
 
     def query(self, filters=()):
         """Query close approaches to generate those that match a collection of filters.
