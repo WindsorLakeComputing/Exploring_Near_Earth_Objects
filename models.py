@@ -99,7 +99,7 @@ class CloseApproach:
         self._designation = info['des']
         self.time = cd_to_datetime(info['cd'])  # TODO: Use the cd_to_datetime function for this attribute.
         self.distance = info['dist']
-        self.velocity = info['v_rel']
+        self.velocity = float(info['v_rel'])
 
         # Create an attribute for the referenced NEO, originally None.
         self.neo = None

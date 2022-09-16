@@ -71,6 +71,10 @@ class AttributeFilter:
     def __repr__(self):
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
+class VelocityFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.velocity
 
 def create_filters(
         date=None, start_date=None, end_date=None,
@@ -109,7 +113,10 @@ def create_filters(
     :return: A collection of filters for use with `query`.
     """
     # TODO: Decide how you will represent your filters.
-    return ()
+    if(velocity_min):
+        f = VelocityFilter(operator.gt, velocity_min)
+    #return ()
+        return f
 
 
 def limit(iterator, n=None):
