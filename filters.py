@@ -113,10 +113,14 @@ def create_filters(
     :return: A collection of filters for use with `query`.
     """
     # TODO: Decide how you will represent your filters.
+    filters = []
     if(velocity_min):
-        f = VelocityFilter(operator.gt, velocity_min)
+        filters.append(VelocityFilter(operator.gt, velocity_min))
+    if(velocity_max):
+        filters.append(VelocityFilter(operator.lt, velocity_max))
+
     #return ()
-        return f
+    return filters
 
 
 def limit(iterator, n=None):

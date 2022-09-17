@@ -100,7 +100,6 @@ class NEODatabase:
         """
         match = None
         for n in self._neos:
-            print(f"n.name == {n.name}")
             if n.name == name:
                 match = n
 
@@ -121,10 +120,14 @@ class NEODatabase:
         :return: A stream of matching `CloseApproach` objects.
         """
         # TODO: Generate `CloseApproach` objects that match all of the filters.
-
-        print(f"the filter is {filters}")
+        matches = []
         for approach in self._approaches:
-            if(filters(approach)):
-                print("I FOUND ONE!!!!!!!!!!!!")
-                print(f"approach is {approach}")
-            yield approach
+            #print(f"about to apply filters len(self._approaches) is {len(self._approaches)}")
+            print(f"Approach is {approach}")
+            print([f(approach) for f in filters])
+            if all([f(approach) for f in filters]):
+                print(f"This approach makes the cut {approach}")
+                print(f"Approach is {approach}")
+                matches.append(approach)
+
+        return matches
