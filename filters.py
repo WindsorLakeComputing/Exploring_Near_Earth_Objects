@@ -75,6 +75,21 @@ class VelocityFilter(AttributeFilter):
     @classmethod
     def get(cls, approach):
         return approach.velocity
+class DistanceFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.distance
+
+class DateFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.time.date()
+
+class DiameterFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        diameter = approach.neo.diameter if approach.neo else 0
+        return diameter
 
 def create_filters(
         date=None, start_date=None, end_date=None,
@@ -115,9 +130,25 @@ def create_filters(
     # TODO: Decide how you will represent your filters.
     filters = []
     if(velocity_min):
+        print(f"the velocity_min is {velocity_min}")
         filters.append(VelocityFilter(operator.gt, velocity_min))
     if(velocity_max):
         filters.append(VelocityFilter(operator.lt, velocity_max))
+    if(distance_min):
+        filters.append(DistanceFilter(operator.gt, distance_min))
+    if(distance_max):
+        filters.append(DistanceFilter(operator.lt, distance_max))
+    if(diameter_min):
+        filters.append(DiameterFilter(operator.gt, diameter_min))
+    if(diameter_max):
+        filters.append(DiameterFilter(operator.lt, diameter_max))
+    if(date):
+        filters.append(DateFilter(operator.eq, date))
+    if(start_date):
+        filters.append(DateFilter(operator.gt, start_date))
+    if(end_date):
+        filters.append(DateFilter(operator.lt, end_date))
+
 
     #return ()
     return filters

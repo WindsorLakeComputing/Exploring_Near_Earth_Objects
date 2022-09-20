@@ -55,8 +55,9 @@ class NEODatabase:
                     break
                 if (a._designation == n.designation):
                     n.approaches.append(a)
+                    print("SUUUUUUP DAWG")
                     a.neo = n
-                    #print(f"a == {a}")
+                    print(f"a.neo == {a.neo}")
                     #print(f"n == {n}")
 
 
@@ -123,11 +124,16 @@ class NEODatabase:
         matches = []
         for approach in self._approaches:
             #print(f"about to apply filters len(self._approaches) is {len(self._approaches)}")
+            print(f"approach.")
+            print(f"approach.neo isum {approach.neo}")
             print(f"Approach is {approach}")
-            print([f(approach) for f in filters])
+            print(f"the TIME is {approach.time.date()}")
+            #print([f(approach) for f in filters])
             if all([f(approach) for f in filters]):
                 print(f"This approach makes the cut {approach}")
                 print(f"Approach is {approach}")
+                print(f"the TIME is {approach.time.date()}")
                 matches.append(approach)
+                yield approach
 
         return matches
