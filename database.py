@@ -45,21 +45,11 @@ class NEODatabase:
         print(f"len of self._neos is {len(self._neos)}")
         print(f"len of self._approaches is {len(self._approaches)}")
 
-        for n in self._neos:
-            #print(f"THe n.designation is {n.designation}")
-            for a in self._approaches:
-                #print(f"THe a.designation is {a._designation}")
-                if(a.neo):
-                    #print("SUUUUP???")
-                    #print(a.neo)
-                    break
+        for a in self._approaches:
+            for n in self._neos:
                 if (a._designation == n.designation):
                     n.approaches.append(a)
-                    print("SUUUUUUP DAWG")
                     a.neo = n
-                    print(f"a.neo == {a.neo}")
-                    #print(f"n == {n}")
-
 
         # TODO: What additional auxiliary data structures will be useful?
 
@@ -125,10 +115,11 @@ class NEODatabase:
         for approach in self._approaches:
             #print(f"about to apply filters len(self._approaches) is {len(self._approaches)}")
             print(f"approach.")
-            print(f"approach.neo isum {approach.neo}")
+            if(approach.neo):
+                print(f"approach.neo.hazardous iz {approach.neo.hazardous}")
             print(f"Approach is {approach}")
             print(f"the TIME is {approach.time.date()}")
-            #print([f(approach) for f in filters])
+            print([f(approach) for f in filters])
             if all([f(approach) for f in filters]):
                 print(f"This approach makes the cut {approach}")
                 print(f"Approach is {approach}")

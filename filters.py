@@ -91,6 +91,12 @@ class DiameterFilter(AttributeFilter):
         diameter = approach.neo.diameter if approach.neo else 0
         return diameter
 
+class HazardousFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        hazardous = approach.neo.hazardous if approach.neo else False
+        return hazardous
+
 def create_filters(
         date=None, start_date=None, end_date=None,
         distance_min=None, distance_max=None,
@@ -148,6 +154,11 @@ def create_filters(
         filters.append(DateFilter(operator.gt, start_date))
     if(end_date):
         filters.append(DateFilter(operator.lt, end_date))
+    if(hazardous):
+        print(f"the pizza is {hazardous}")
+        value = "Y" if hazardous else "F"
+        print(f"the value is {value}")
+        filters.append(HazardousFilter(operator.eq, value))
 
 
     #return ()
@@ -164,4 +175,22 @@ def limit(iterator, n=None):
     :yield: The first (at most) `n` values from the iterator.
     """
     # TODO: Produce at most `n` values from the given iterator.
+    start, stop, step = 0, n, 1
+    it = iter(range(start, stop, step))
+    try:
+        nexti = next(it)
+    except StopIteration:
+        # Consume *iterable* up to the *start* position.
+        for i, element in zip(range(start), iterator):
+            pass
+        return
+    try:
+        for i, element in enumerate(iterator):
+            if i == nexti:
+                yield element
+                nexti = next(it)
+    except StopIteration:
+        # Consume to *stop*.
+        for i, element in zip(range(i + 1, stop), iterator):
+            pass
     return iterator
