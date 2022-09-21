@@ -42,9 +42,6 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
-        print(f"len of self._neos is {len(self._neos)}")
-        print(f"len of self._approaches is {len(self._approaches)}")
-
         for a in self._approaches:
             for n in self._neos:
                 if (a._designation == n.designation):
@@ -113,17 +110,7 @@ class NEODatabase:
         # TODO: Generate `CloseApproach` objects that match all of the filters.
         matches = []
         for approach in self._approaches:
-            #print(f"about to apply filters len(self._approaches) is {len(self._approaches)}")
-            print(f"approach.")
-            if(approach.neo):
-                print(f"approach.neo.hazardous iz {approach.neo.hazardous}")
-            print(f"Approach is {approach}")
-            print(f"the TIME is {approach.time.date()}")
-            print([f(approach) for f in filters])
             if all([f(approach) for f in filters]):
-                print(f"This approach makes the cut {approach}")
-                print(f"Approach is {approach}")
-                print(f"the TIME is {approach.time.date()}")
                 matches.append(approach)
                 yield approach
 

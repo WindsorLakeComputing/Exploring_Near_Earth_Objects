@@ -384,9 +384,6 @@ def main():
     # Extract data from the data files into structured Python objects.
     database = NEODatabase(load_neos(args.neofile), load_approaches(args.cadfile))
 
-    print(f"Searching for the designation of Ganymed")
-    print(database.get_neo_by_name("Ganymed"))
-
     # Run the chosen subcommand.
     if args.cmd == 'inspect':
         inspect(database, pdes=args.pdes, name=args.name, verbose=args.verbose)
@@ -394,7 +391,6 @@ def main():
         query(database, args)
     elif args.cmd == 'interactive':
         NEOShell(database, inspect_parser, query_parser, aggressive=args.aggressive).cmdloop()
-
 
 if __name__ == '__main__':
     main()

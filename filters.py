@@ -136,7 +136,6 @@ def create_filters(
     # TODO: Decide how you will represent your filters.
     filters = []
     if(velocity_min):
-        print(f"the velocity_min is {velocity_min}")
         filters.append(VelocityFilter(operator.gt, velocity_min))
     if(velocity_max):
         filters.append(VelocityFilter(operator.lt, velocity_max))
@@ -155,13 +154,9 @@ def create_filters(
     if(end_date):
         filters.append(DateFilter(operator.lt, end_date))
     if(hazardous):
-        print(f"the pizza is {hazardous}")
         value = "Y" if hazardous else "F"
-        print(f"the value is {value}")
         filters.append(HazardousFilter(operator.eq, value))
 
-
-    #return ()
     return filters
 
 
