@@ -45,8 +45,10 @@ class NEODatabase:
         for a in self._approaches:
             for n in self._neos:
                 if (a._designation == n.designation):
-                    n.approaches.append(a)
                     a.neo = n
+                    n.approaches.append(a)
+
+
 
         # TODO: What additional auxiliary data structures will be useful?
 
@@ -108,8 +110,8 @@ class NEODatabase:
         :return: A stream of matching `CloseApproach` objects.
         """
         # TODO: Generate `CloseApproach` objects that match all of the filters.
-        matches = []
         for approach in self._approaches:
+            matches = []
             if all([f(approach) for f in filters]):
                 matches.append(approach)
                 yield approach

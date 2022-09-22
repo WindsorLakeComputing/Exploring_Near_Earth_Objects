@@ -28,7 +28,6 @@ def load_neos(neo_csv_path):
     near_earths = []
     with open(neo_csv_path) as f:
         header = f.readline().split(",")
-        next(f)
         for line in f:
             row = {header[i]: line.split(",")[i] for i in range(len(header))}
             row['source'] = "near_earth"
