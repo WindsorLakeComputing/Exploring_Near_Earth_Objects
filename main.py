@@ -83,7 +83,7 @@ def make_parser():
     )
 
     # Add arguments for custom data files.
-    parser.add_argument('--neofile', default=(DATA_ROOT / 'tiny_neos.csv'),
+    parser.add_argument('--neofile', default=(DATA_ROOT / 'neos.csv'),
                         type=pathlib.Path,
                         help="Path to CSV file of near-Earth objects.")
     parser.add_argument('--cadfile', default=(DATA_ROOT / 'cad.json'),
