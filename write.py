@@ -29,10 +29,13 @@ def write_to_csv(results, filename):
         'designation', 'name', 'diameter_km', 'potentially_hazardous'
     )
     # TODO: Write the results to a CSV file, following the specification in the instructions.
-    with open(filename, 'w') as outfile:
-        writer = csv.writer(outfile)
-        writer.writerow(fieldnames)
-        for row in results:
+
+    f = open(filename, 'w')
+    with f:
+        writer = csv.DictWriter(f, fieldnames)
+        writer.writeheader()
+        for approach in results:
+            row = {**approach.serialize(), **approach.neo.serialize()}
             writer.writerow(row)
 
 def write_to_json(results, filename):
@@ -48,5 +51,12 @@ def write_to_json(results, filename):
     """
     # TODO: Write the results to a JSON file, following the specification in the instructions.
     # Write available listings to an output file.
+    rows = []
+
+
+    for index, res in enumerate(results):
+        rows.append(res.serialize())
+        rows[index]['neo'] = res.neo.serialize()
+
     with open(filename, 'w') as outfile:
-        json.dump(results, outfile, indent=2)
+        json.dump(rows, outfile, indent=2)

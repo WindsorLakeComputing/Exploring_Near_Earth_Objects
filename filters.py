@@ -16,6 +16,7 @@ iterator.
 
 You'll edit this file in Tasks 3a and 3c.
 """
+import itertools
 import operator
 
 
@@ -169,24 +170,7 @@ def limit(iterator, n=None):
     :yield: The first (at most) `n` values from the iterator.
     """
     # TODO: Produce at most `n` values from the given iterator.
-
-    start, stop, step = 0, n, 1
-    if(n):
-        it = iter(range(start, stop, step))
-        try:
-            nexti = next(it)
-        except StopIteration:
-            # Consume *iterable* up to the *start* position.
-            for i, element in zip(range(start), iterator):
-                pass
-            return
-        try:
-            for i, element in enumerate(iterator):
-                if i == nexti:
-                    yield element
-                    nexti = next(it)
-        except StopIteration:
-            # Consume to *stop*.
-            for i, element in zip(range(i + 1, stop), iterator):
-                pass
-    return iterator
+    if (n != 0) and (n != None):
+        return itertools.islice(iterator, n)
+    else:
+        return iterator

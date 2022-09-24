@@ -71,6 +71,13 @@ class NearEarthObject:
         return f"NearEarthObject(designation={self.designation!r}, name={self.name!r}, " \
                f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
 
+    def serialize(self):
+        dict = {}
+        dict['designation'] = self.designation
+        dict['name'] = self.name
+        dict['diameter_km'] = self.diameter
+        dict['potentially_hazardous'] = self.hazardous
+        return dict
 
 class CloseApproach:
     """A close approach to Earth by an NEO.
@@ -96,7 +103,7 @@ class CloseApproach:
         # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
-        self._designation = str(info['des']) if info['des'] else None
+        self._designation = info['des'] if info['des'] else None
         self.time = cd_to_datetime(info['cd'])  # TODO: Use the cd_to_datetime function for this attribute.
         self.distance = float(info['dist'])
         self.velocity = float(info['v_rel'])
@@ -132,11 +139,16 @@ class CloseApproach:
         time_str = self.time_str
         return f"At {time_str}, approaches Earth at a distance of {self.distance} au and a velocity of {self.velocity} km/s."
 
-
-
-
-
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
         return f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, " \
                f"velocity={self.velocity:.2f}, neo={self.neo!r})"
+
+
+    def serialize(self):
+        """Produce a dictionary containing relevant attributes for CSV or JSON serialization."""
+        dict = {}
+        dict['datetime_utc'] = datetime_to_str(self.time)
+        dict['distance_au'] = self.distance
+        dict['velocity_km_s'] = self.velocity
+        return dict
