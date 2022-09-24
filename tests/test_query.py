@@ -72,6 +72,7 @@ class TestQuery(unittest.TestCase):
 
         filters = create_filters(start_date=start_date)
         received = set(self.db.query(filters))
+
         self.assertEqual(expected, received, msg="Computed results do not match expected results.")
 
     def test_query_approaches_before_july(self):
@@ -289,6 +290,7 @@ class TestQuery(unittest.TestCase):
         self.assertEqual(expected, received, msg="Computed results do not match expected results.")
 
     def test_query_with_hazardous(self):
+
         expected = set(
             approach for approach in self.approaches
             if approach.neo.hazardous
@@ -525,6 +527,7 @@ class TestQuery(unittest.TestCase):
             diameter_min=diameter_min, diameter_max=diameter_max,
             hazardous=False
         )
+
         received = set(self.db.query(filters))
         self.assertEqual(expected, received, msg="Computed results do not match expected results.")
 

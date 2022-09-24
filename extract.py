@@ -36,6 +36,7 @@ def load_neos(neo_csv_path):
 
     return near_earths
 
+
 def load_approaches(cad_json_path):
     """Read close approach data from a JSON file.
 

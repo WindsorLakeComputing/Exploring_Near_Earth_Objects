@@ -39,6 +39,7 @@ class AttributeFilter:
     Concrete subclasses can override the `get` classmethod to provide custom
     behavior to fetch a desired attribute from the given `CloseApproach`.
     """
+
     def __init__(self, op, value):
         """Construct a new `AttributeFilter` from an binary predicate and a reference value.
 
@@ -70,33 +71,56 @@ class AttributeFilter:
         raise UnsupportedCriterionError
 
     def __repr__(self):
+        """Return a string representation."""
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
+
 class VelocityFilter(AttributeFilter):
+    """Filter on the velocity variable."""
+
     @classmethod
     def get(cls, approach):
+        """Return the velocity variable."""
         return approach.velocity
+
+
 class DistanceFilter(AttributeFilter):
+    """Filter on the distance variable."""
+
     @classmethod
     def get(cls, approach):
+        """Return the distance variable."""
         return approach.distance
 
+
 class DateFilter(AttributeFilter):
+    """Filter on the date variable."""
+
     @classmethod
     def get(cls, approach):
+        """Return the date variable."""
         return approach.time.date()
 
+
 class DiameterFilter(AttributeFilter):
+    """Filter on the diameter variable."""
+
     @classmethod
     def get(cls, approach):
+        """If the diameter variable exists, return it. Otherwise return 0."""
         diameter = approach.neo.diameter if approach.neo else 0
         return diameter
 
+
 class HazardousFilter(AttributeFilter):
+    """Filter on the hazardous variable."""
+
     @classmethod
     def get(cls, approach):
+        """If the hazardous variable has a value return it. Otherwise return False."""
         hazardous = approach.neo.hazardous if approach.neo else False
         return hazardous
+
 
 def create_filters(
         date=None, start_date=None, end_date=None,
@@ -134,7 +158,6 @@ def create_filters(
     :param hazardous: Whether the NEO of a matching `CloseApproach` is potentially hazardous.
     :return: A collection of filters for use with `query`.
     """
-    # TODO: Decide how you will represent your filters.
     filters = []
     if(velocity_min):
         filters.append(VelocityFilter(operator.ge, velocity_min))
@@ -169,8 +192,7 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    # TODO: Produce at most `n` values from the given iterator.
-    if (n != 0) and (n != None):
+    if (n != 0) and n:
         return itertools.islice(iterator, n)
     else:
         return iterator

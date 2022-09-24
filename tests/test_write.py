@@ -102,7 +102,6 @@ class TestWriteToCSV(unittest.TestCase):
         except csv.Error as err:
             raise self.failureException("Unable to sniff for headers.") from err
 
-
     def test_csv_data_has_five_rows(self):
         # Now, we have the value in memory, and can _actually_ start testing.
         buf = io.StringIO(self.value)
@@ -210,8 +209,11 @@ class TestWriteToJSON(unittest.TestCase):
         except json.JSONDecodeError as err:
             raise self.failureException("write_to_json produced an invalid JSON document") from err
 
+        print(f"the data is {data}")
         approach = data[0]
         try:
+            print(f"approach is {approach}")
+            print(f"type(approach['datetime_utc']) is {type(approach['datetime_utc'])}")
             datetime.datetime.strptime(approach['datetime_utc'], '%Y-%m-%d %H:%M')
         except ValueError:
             self.fail("The `datetime_utc` key isn't in YYYY-MM-DD HH:MM` format.")
